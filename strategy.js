@@ -72,19 +72,19 @@ Strategy.prototype.authenticate = function(req) {
   }
 
   var self = this;
-  function verified(err, user) {
+  function verified(err, user, info) {
     if (err) { return self.error(err); }
     if (!user) {
       return self.fail(401);
     }
-    self.success(user);
+    self.success(user, info);
   }
 
   try {
     if (self._passReqToCallback) {
       this._verify(req, token, verified);
     } else {
-      this._verify(token,verified);
+      this._verify(token, verified);
     }
   } catch (ex) {
     return self.error(ex);
